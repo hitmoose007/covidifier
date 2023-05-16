@@ -1,1 +1,1 @@
-read me
+first run the pre-processor, then the ml models, then the final notebook
