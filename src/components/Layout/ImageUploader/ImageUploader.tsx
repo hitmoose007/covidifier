@@ -21,8 +21,7 @@ const ImageUploader = (props: Props) => {
       try {
         // console.log(images[0].data_url);
         // make fetch request
-        console.log("fetching");
-        const response = await fetch("https://50d3-34-90-34-106.ngrok.io/", {
+        const response = await fetch(process.env.NEXT_PUBLIC_SERVER_API_ROUTE, {
           method: "POST",
           body: JSON.stringify({
             image: images[0].data_url,
@@ -31,12 +30,23 @@ const ImageUploader = (props: Props) => {
 
         const data = await response.json();
 
+        setReceivedData(true);
         if (data.result === true) {
           setIsPositive(true);
           setTimeout(() => {
+          setReceivedData(false);
             setIsPositive(false);
           }, 3000);
         }
+
+        else {
+          setIsPositive(false);
+          setTimeout(() => {
+            setReceivedData(false);
+            setIsPositive(false);
+          }, 3000);
+        }
+
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +56,7 @@ const ImageUploader = (props: Props) => {
 
   return (
     <>
-      <div className='flex justify-center h-40'>
+      <div className='flex flex-col justify-center h-40 '>
         <ImageUploading
           value={images}
           onChange={onChange}
@@ -90,8 +100,28 @@ const ImageUploader = (props: Props) => {
             </div>
           )}
         </ImageUploading>
+        <div className="">
+      {receivedData && isPositive &&<> 
+        <p 
+
+        style={{ textShadow: "0 0 20px #FFFFFF" }}
+            className='text-white bounce-in text-3xl font-bold text-center'>
+           You are Positive
+            </p>
+      <Confetti />
+      </>
+      }
+      {receivedData && !isPositive &&<> 
+        <p
+            
+        style={{ textShadow: "0 0 20px #FFFFFF" }}
+            className='text-white bounce-in text-3xl font-bold text-center'>
+           You are Negative!!
+            </p>
+      <Confetti />
+      </>
+      }</div>
       </div>
-      {isPositive && <Confetti />}
     </>
   );
 };

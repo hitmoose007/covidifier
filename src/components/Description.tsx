@@ -1,10 +1,12 @@
 import React from "react";
 
 type Props = {
-  description: string;
+    header:string;
+ topDescription: string;
+    bottomDescription: string; 
 };
 
-const Description = ({ description }: Props) => {
+const Description = ({ header, topDescription,bottomDescription }: Props) => {
   return (
     <div
     //   style={{ textShadow: "0 0 10px #FFFFFF" }}
@@ -14,14 +16,11 @@ const Description = ({ description }: Props) => {
         style={{ textShadow: "0 0 20px #FFFFFF" }}
         className='  text-[25px] font-bold text-center '
       >
-        How it works
+        {header}
       </h1>
       <p className="mt-8">
-        We use a machine learning model to predict the probability of a person
-        having COVID-19 based on their symptoms.
-        <br/><br/> The model is trained on a
-        dataset of 5644 patients with COVID-19 and 14000 patients without
-        COVID-19. The model is trained on 21 symptoms. 
+        {topDescription}
+        <br/><br/> {bottomDescription}
       </p>
     </div>
   );
